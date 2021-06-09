@@ -114,3 +114,7 @@ class Blockchain:
             for j in b['VotingTrans']:
                 self.countVote[j['candidate']] += 1
         return self.countVote
+    
+app = Flask(__name__)
+node_address = str(uuid4()).replace('-', '')
+blockchain = Blockchain()
