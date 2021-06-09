@@ -118,3 +118,19 @@ class Blockchain:
 app = Flask(__name__)
 node_address = str(uuid4()).replace('-', '')
 blockchain = Blockchain()
+
+# Getting the full Blockchain
+@app.route('/get_chain')
+def get_chain():
+    response = {'chain': blockchain.chain,'length': len(blockchain.chain)}
+    return jsonify(response), 200
+
+# Checking if the Blockchain is valid
+@app.route('/is_valid')
+def is_valid():
+    is_valid = blockchain.is_chain_valid(blockchain.chain)
+    if is_valid:
+        response = {'message': 'The Blockchain is valid.'}
+    else:
+        response = {'message': 'No!! The Blockchain is not valid.'}
+    return jsonify(response), 200
