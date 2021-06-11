@@ -134,3 +134,34 @@ def is_valid():
     else:
         response = {'message': 'No!! The Blockchain is not valid.'}
     return jsonify(response), 200
+
+# Changing a block data to verify Blockchain's validity
+@app.route('/change_data')
+def mod_data():
+    block = blockchain.get_a_block(1)
+    if block == -1: 
+        response = {'message': 'No Such Block exits in blockchain'}
+    else:
+        block["VotingTrans"][1]["candidate"] = "B"
+        response = {'block': block,"msg":"Block Data Modified"}
+    return jsonify(response), 200
+
+# Adding a new transaction to the Blockchain
+@app.route('/caste_vote', methods=['POST'])
+def add_transaction():
+    json = request.get_json()
+    transaction_keys = ['voter', 'candidate']
+    if not all(key in json for key in transaction_keys):
+        return 'Some required data for the transaction are missing', 400
+    index = blockchain.add_transaction(json['voter'], json['candidate'])
+    if index==None:
+        return 'This is Voter ID/Candidate is Invalid'
+    elif index==-1:
+        return 'This is a Fake Vote, You\'ve already casted the vote'
+    else:
+        msg="Added to Pending Votes, yet to be mined"
+        if len(blockchain.VotingTrans)==4:
+            mine_block()
+            msg = "A New Block is mined"
+        response = {"msg":'This is a successful vote, Vote Casted',"Block Status":msg,"pendingVotes":blockchain.VotingTrans}
+        return response,200
