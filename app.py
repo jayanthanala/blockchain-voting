@@ -166,6 +166,11 @@ def add_transaction():
             msg = "A New Block is mined"
         response = {"msg":'This is a successful vote, Vote Casted',"Block Status":msg,"pendingVotes":blockchain.VotingTrans}
         return response,200
+
+@app.route('/getResult', methods=['GET'])
+def getResult():
+    response =  blockchain.getResult(blockchain.chain)
+    return jsonify(response), 200
     
 # Decentralizing the Blockchain - Pending, need more research
 
