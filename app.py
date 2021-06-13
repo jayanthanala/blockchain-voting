@@ -119,13 +119,13 @@ app = Flask(__name__)
 node_address = str(uuid4()).replace('-', '')
 blockchain = Blockchain()
 
-# Getting the full Blockchain
+# Fetching the Blockchain
 @app.route('/get_chain')
 def get_chain():
     response = {'chain': blockchain.chain,'length': len(blockchain.chain)}
     return jsonify(response), 200
 
-# Checking if the Blockchain is valid
+# Checking Chain's validity
 @app.route('/is_valid')
 def is_valid():
     is_valid = blockchain.is_chain_valid(blockchain.chain)
