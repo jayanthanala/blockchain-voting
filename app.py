@@ -136,13 +136,14 @@ def is_valid():
     return jsonify(response), 200
 
 # Changing a block data to verify Blockchain's validity
-@app.route('/change_data')
+@app.route('/change_data', methods=['POST'])
 def mod_data():
-    block = blockchain.get_a_block(1)
+    json = request.get_json()
+    block = blockchain.get_a_block(json['block'])
     if block == -1: 
         response = {'message': 'No Such Block exits in blockchain'}
     else:
-        block["VotingTrans"][1]["candidate"] = "B"
+        block["VotingTrans"][2]["candidate"] = json['mdata']
         response = {'block': block,"msg":"Block Data Modified"}
     return jsonify(response), 200
 
