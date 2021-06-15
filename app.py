@@ -119,7 +119,7 @@ app = Flask(__name__)
 node_address = str(uuid4()).replace('-', '')
 blockchain = Blockchain()
 
-def mine_block():
+def mine_block(): #Add exceptions
     previous_block = blockchain.get_previous_block()
     previous_proof = previous_block['proof']
     proof = blockchain.proof_of_work(previous_proof)
