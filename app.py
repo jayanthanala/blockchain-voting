@@ -181,7 +181,7 @@ def getResult():
     response =  blockchain.getResult(blockchain.chain)
     return jsonify(response), 200
     
-# Decentralizing the Blockchain - Pending, need more research
+# Decentralizing the Blockchain - Pending, need more research for implementation
 
 @app.route('/connect_node', methods=['POST'])
 def connect_node():
